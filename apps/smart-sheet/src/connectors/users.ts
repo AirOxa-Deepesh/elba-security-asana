@@ -6,6 +6,7 @@
  * These file illustrate potential scenarios and methodologies relevant for SaaS integration.
  */
 
+import { decrypt } from '@/common/crypto';
 import { env } from '@/env';
 import { SmartSheetError } from './commons/error';
 
@@ -56,4 +57,19 @@ export const getUsers = async (token: string, page: number) => {
     nextPage,
     users,
   };
+};
+
+export const deleteUser = async (token: string, userId: string) => {
+  const accessToken = await decrypt(token);
+  const response = await fetch(`https://api.smartsheet.com/2.0/users/${userId}`, {
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    throw new SmartSheetError(`Could not delete user with Id: ${userId}`, { response });
+  }
 };

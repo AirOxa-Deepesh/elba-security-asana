@@ -28,7 +28,7 @@ export function GET(request: NextRequest) {
   smartSheetLoginUrl.searchParams.append('client_id', env.SMART_SHEET_CLIENT_KEY);
   smartSheetLoginUrl.searchParams.append('response_type', 'code');
   smartSheetLoginUrl.searchParams.append('redirect_uri', env.SMART_SHEET_REDIRECT_URL);
-  smartSheetLoginUrl.searchParams.append('scope', 'READ_USERS');
+  smartSheetLoginUrl.searchParams.append('scope', 'READ_USERS ADMIN_USERS');
   smartSheetLoginUrl.searchParams.append('state', state);
 
   // we redirect the user to the installation page of the Smartsheet application
